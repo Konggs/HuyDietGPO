@@ -1,4 +1,4 @@
-                local player
+
             task.delay(5, function()
                 for _, v in ipairs(workspace:GetDescendants()) do
                     if v:IsA("BasePart") then v.Transparency = 1 end
