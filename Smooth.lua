@@ -136,8 +136,7 @@ task.delay(
                 "Modes",
                 "MobileMouseIcon",
                 "HealthBars",
-                "Display",
-                "HUD"
+                "Display"
             }
             for _, name in ipairs(guiNames) do
                 local gui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild(name)
