@@ -70,45 +70,47 @@ local function GUI()
     end
     task.spawn(function()
         while task.wait(1) do
-            for _, child in ipairs(NpcScrollFrame:GetChildren()) do
-                if child:IsA("TextLabel") then
-                    child:Destroy()
-                end
-            end
-            local npcs = getAllNpcs()
-            if #npcs == 0 then
-                local noNpcLabel = Instance.new("TextLabel")
-                noNpcLabel.BackgroundTransparency = 1
-                noNpcLabel.Size                   = UDim2.new(1, 0, 0, 25)
-                noNpcLabel.Font                   = Enum.Font.Gotham
-                noNpcLabel.Text                   = "No NPC Found"
-                noNpcLabel.TextColor3             = Color3.fromRGB(0, 0, 0)
-                noNpcLabel.TextSize               = 18
-                noNpcLabel.Parent                 = NpcScrollFrame
-            else
-                for _, npc in ipairs(npcs) do
-                    local hum = npc:FindFirstChild("Humanoid")
-                    local lbl = Instance.new("TextLabel")
-                    lbl.BackgroundTransparency = 1
-                    lbl.Size = UDim2.new(1, 0, 0, 25)
-                    lbl.Font = Enum.Font.Gotham
-                    lbl.TextColor3 = Color3.fromRGB(0, 0, 0)
-                    lbl.TextSize   = 18
-                    lbl.TextXAlignment = Enum.TextXAlignment.Left
-
-                    if hum then
-                        lbl.Text = string.format("%s [%d/%d]",
-                            npc.Name,
-                            math.floor(hum.Health),
-                            math.floor(hum.MaxHealth)
-                        )
-                    else
-                        lbl.Text = npc.Name .. " [No HP Info]"
+            pcall(function()
+                for _, child in ipairs(NpcScrollFrame:GetChildren()) do
+                    if child:IsA("TextLabel") then
+                        child:Destroy()
                     end
-                    lbl.Parent = NpcScrollFrame
                 end
-            end
-            TimeLabel.Text = "Time: " .. getTimeSinceStart()
+                local npcs = getAllNpcs()
+                if #npcs == 0 then
+                    local noNpcLabel = Instance.new("TextLabel")
+                    noNpcLabel.BackgroundTransparency = 1
+                    noNpcLabel.Size                   = UDim2.new(1, 0, 0, 25)
+                    noNpcLabel.Font                   = Enum.Font.Gotham
+                    noNpcLabel.Text                   = "No NPC Found"
+                    noNpcLabel.TextColor3             = Color3.fromRGB(0, 0, 0)
+                    noNpcLabel.TextSize               = 18
+                    noNpcLabel.Parent                 = NpcScrollFrame
+                else
+                    for _, npc in ipairs(npcs) do
+                        local hum = npc:FindFirstChild("Humanoid")
+                        local lbl = Instance.new("TextLabel")
+                        lbl.BackgroundTransparency = 1
+                        lbl.Size = UDim2.new(1, 0, 0, 25)
+                        lbl.Font = Enum.Font.Gotham
+                        lbl.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        lbl.TextSize   = 18
+                        lbl.TextXAlignment = Enum.TextXAlignment.Left
+
+                        if hum then
+                            lbl.Text = string.format("%s [%d/%d]",
+                                npc.Name,
+                                math.floor(hum.Health),
+                                math.floor(hum.MaxHealth)
+                            )
+                        else
+                            lbl.Text = npc.Name .. " [No HP Info]"
+                        end
+                        lbl.Parent = NpcScrollFrame
+                    end
+                end
+                TimeLabel.Text = "Time: " .. getTimeSinceStart()
+            end)
         end
     end)
 end
