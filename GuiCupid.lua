@@ -108,29 +108,31 @@ local function GUI()
     end
     spawn(function()
         while task.wait(1) do
-            local npcTable = getAllNpcs()
+        pcall(function()
+                local npcTable = getAllNpcs()
             if #npcTable > 0 then
-                local lines = {}
-                for _, npc in ipairs(npcTable) do
-                    local hum = npc:FindFirstChild("Humanoid")
-                    if hum then
-                        table.insert(
-                            lines, 
-                            string.format("%s [%d/%d]",
-                                npc.Name, 
-                                math.floor(hum.Health), 
-                                math.floor(hum.MaxHealth)
+                    local lines = {}
+                    for _, npc in ipairs(npcTable) do
+                        local hum = npc:FindFirstChild("Humanoid")
+                        if hum then
+                            table.insert(
+                                lines, 
+                                string.format("%s [%d/%d]",
+                                    npc.Name, 
+                                    math.floor(hum.Health), 
+                                    math.floor(hum.MaxHealth)
+                                )
                             )
-                        )
-                    else
-                        table.insert(lines, npc.Name .. " [No HP Info]")
+                        else
+                            table.insert(lines, npc.Name .. " [No HP Info]")
+                        end
                     end
+                    StatusLabel.Text = "Status: Killing " .. table.concat(lines, ", ")
+                else
+                    StatusLabel.Text = "Status: No NPC Found"
                 end
-                StatusLabel.Text = "Status: Killing " .. table.concat(lines, ", ")
-            else
-                StatusLabel.Text = "Status: No NPC Found"
-            end
-            TimeLabel.Text = "Time: " .. getTimeSinceStart()
+                TimeLabel.Text = "Time: " .. getTimeSinceStart()
+            end)
         end
     end)
 end
