@@ -5,99 +5,73 @@ local function GUI()
     local startTime = tick()
     local function getTimeSinceStart()
         local elapsed = tick() - startTime
-        local HOUR   = math.floor(elapsed / 3600)
-        local MINUTE = math.floor((elapsed % 3600) / 60)
-        local SECOND = math.floor(elapsed % 60)
-        HOUR   = (HOUR < 10)   and ("0" .. HOUR)   or HOUR
-        MINUTE = (MINUTE < 10) and ("0" .. MINUTE) or MINUTE
-        SECOND = (SECOND < 10) and ("0" .. SECOND) or SECOND
-
-        return string.format("%s:%s:%s", HOUR, MINUTE, SECOND)
+        local minutes = math.floor(elapsed / 60)
+        local seconds = math.floor(elapsed % 60)
+        return string.format("%02d:%02d", minutes, seconds)
     end
     local FarmStatusGui = Instance.new("ScreenGui")
     FarmStatusGui.Name   = "Cupid Dungeon"
     FarmStatusGui.Parent = CoreGui
     FarmStatusGui.Enabled = true
     local MainFrame = Instance.new("Frame")
-    MainFrame.Name              = "MainFrame"
-    MainFrame.AnchorPoint       = Vector2.new(0.5, 0.5)
-    MainFrame.BackgroundColor3  = Color3.fromRGB(0, 0, 0)
-    MainFrame.BackgroundTransparency = 0.999
-    MainFrame.BorderSizePixel   = 0
-    MainFrame.Position          = UDim2.new(0.5, 0, 0.5, 0)
-    MainFrame.Size              = UDim2.new(1, 0, 1, 0)
-    MainFrame.Parent            = FarmStatusGui
+    MainFrame.Name                  = "MainFrame"
+    MainFrame.AnchorPoint           = Vector2.new(0.5, 0.5)
+    MainFrame.BackgroundColor3      = Color3.fromRGB(255, 255, 255)
+    MainFrame.BackgroundTransparency = 1  -- 0 = không trong suốt, 1 = trong suốt
+    MainFrame.BorderSizePixel       = 0
+    MainFrame.Position              = UDim2.new(0.5, 0, 0.5, 0)
+    MainFrame.Size                  = UDim2.new(1, 0, 1, 0)
+    MainFrame.Parent                = FarmStatusGui
     local TitleLabel = Instance.new("TextLabel")
     TitleLabel.Name                  = "TitleLabel"
     TitleLabel.AnchorPoint           = Vector2.new(0.5, 0.5)
     TitleLabel.BackgroundColor3      = Color3.fromRGB(255, 255, 255)
-    TitleLabel.BackgroundTransparency = 0.999
+    TitleLabel.BackgroundTransparency = 1
     TitleLabel.BorderSizePixel       = 0
-    TitleLabel.Position              = UDim2.new(0.5, 0, 0.5, -45)
+    TitleLabel.Position              = UDim2.new(0.5, 0, 0.3, 0)
     TitleLabel.Size                  = UDim2.new(0, 300, 0, 80)
     TitleLabel.Font                  = Enum.Font.Gotham
     TitleLabel.Text                  = "Cupid Dungeon"
-    TitleLabel.TextColor3            = Color3.fromRGB(175, 187, 230)
+    TitleLabel.TextColor3            = Color3.fromRGB(200, 150, 230)
     TitleLabel.TextSize              = 65
     TitleLabel.Parent                = MainFrame
     local TitleLabelStroke = Instance.new("UIStroke")
-    TitleLabelStroke.Color     = Color3.fromRGB(175, 187, 230)
+    TitleLabelStroke.Color     = Color3.fromRGB(0, 0, 0)
     TitleLabelStroke.Thickness = 1.5
     TitleLabelStroke.Parent    = TitleLabel
-    local StatusLabel = Instance.new("TextLabel")
-    StatusLabel.Name                  = "StatusLabel"
-    StatusLabel.AnchorPoint           = Vector2.new(0.5, 0.5)
-    StatusLabel.BackgroundColor3      = Color3.fromRGB(255, 255, 255)
-    StatusLabel.BackgroundTransparency = 0.999
-    StatusLabel.BorderSizePixel       = 0
-    StatusLabel.Position              = UDim2.new(0.5, 0, 0.5, 0)
-    StatusLabel.Size                  = UDim2.new(0, 300, 0, 30)
-    StatusLabel.Font                  = Enum.Font.Gotham
-    StatusLabel.Text                  = "Status: ..."
-    StatusLabel.TextColor3            = Color3.fromRGB(0, 0, 0)
-    StatusLabel.TextSize              = 20
-    StatusLabel.Parent                = MainFrame
     local TimeLabel = Instance.new("TextLabel")
     TimeLabel.Name                  = "TimeLabel"
     TimeLabel.AnchorPoint           = Vector2.new(0.5, 0.5)
     TimeLabel.BackgroundColor3      = Color3.fromRGB(255, 255, 255)
-    TimeLabel.BackgroundTransparency = 0.999
+    TimeLabel.BackgroundTransparency = 1
     TimeLabel.BorderSizePixel       = 0
-    TimeLabel.Position              = UDim2.new(0.5, 0, 0.5, 32)
-    TimeLabel.Size                  = UDim2.new(0, 300, 0, 20)
+    TimeLabel.Position              = UDim2.new(0.5, 0, 0.7, 0)
+    TimeLabel.Size                  = UDim2.new(0, 300, 0, 30)
     TimeLabel.Font                  = Enum.Font.Gotham
-    TimeLabel.Text                  = "Time: 0s"
+    TimeLabel.Text                  = "Time: 00:00"
     TimeLabel.TextColor3            = Color3.fromRGB(0, 0, 0)
     TimeLabel.TextSize              = 16
     TimeLabel.Parent                = MainFrame
-    local Blur = Instance.new("BlurEffect")
-    Blur.Size   = 50
-    Blur.Parent = Lighting
-    Blur.Enabled = true
-    local DropShadowHolder = Instance.new("Frame")
-    DropShadowHolder.Name                  = "DropShadowHolder"
-    DropShadowHolder.ZIndex                = 0
-    DropShadowHolder.Size                  = UDim2.new(1, 0, 1, 0)
-    DropShadowHolder.BackgroundTransparency = 1
-    DropShadowHolder.BorderSizePixel       = 0
-    DropShadowHolder.Parent                = MainFrame
-    local DropShadow = Instance.new("ImageLabel")
-    DropShadow.Name                  = "DropShadow"
-    DropShadow.ZIndex                = 0
-    DropShadow.Image                 = "rbxassetid://18274042189"
-    DropShadow.ImageColor3           = Color3.fromRGB(0, 0, 0)
-    DropShadow.ImageTransparency     = 0.999
-    DropShadow.ScaleType             = Enum.ScaleType.Slice
-    DropShadow.SliceCenter           = Rect.new(49, 49, 450, 450)
-    DropShadow.AnchorPoint           = Vector2.new(0.5, 0.5)
-    DropShadow.BackgroundTransparency = 1
-    DropShadow.BorderSizePixel       = 0
-    DropShadow.Position              = UDim2.new(0.5, 0, 0.5, 0)
-    DropShadow.Size                  = UDim2.new(1, 47, 1, 47)
-    DropShadow.Parent                = DropShadowHolder
+    local NpcScrollFrame = Instance.new("ScrollingFrame")
+    NpcScrollFrame.Name                  = "NpcScrollFrame"
+    NpcScrollFrame.AnchorPoint           = Vector2.new(0.5, 0.5)
+    NpcScrollFrame.BackgroundColor3      = Color3.fromRGB(255, 255, 255)
+    NpcScrollFrame.BackgroundTransparency = 0.2  -- hơi mờ
+    NpcScrollFrame.BorderSizePixel       = 0
+    NpcScrollFrame.Position              = UDim2.new(0.5, 0, 0.5, 0)
+    NpcScrollFrame.Size                  = UDim2.new(0, 400, 0, 150)
+    NpcScrollFrame.ScrollBarThickness    = 6
+    NpcScrollFrame.ScrollingDirection    = Enum.ScrollingDirection.Y
+    NpcScrollFrame.Parent                = MainFrame
+    local Layout = Instance.new("UIListLayout")
+    Layout.Parent    = NpcScrollFrame
+    Layout.Padding   = UDim.new(0, 4)
+    Layout.FillDirection = Enum.FillDirection.Vertical
+    Layout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+    Layout.SortOrder = Enum.SortOrder.LayoutOrder
     local function getAllNpcs()
         local allNpcs = {}
-        for _, npc in ipairs(Workspace.NPCs:GetChildren()) do
+        for _, npc in ipairs(Workspace:WaitForChild("NPCs"):GetChildren()) do
             local hrp      = npc:FindFirstChild("HumanoidRootPart")
             local humanoid = npc:FindFirstChild("Humanoid")
             if hrp and humanoid then
@@ -106,33 +80,44 @@ local function GUI()
         end
         return allNpcs
     end
-    spawn(function()
+    task.spawn(function()
         while task.wait(1) do
-        pcall(function()
-                local npcTable = getAllNpcs()
-            if #npcTable > 0 then
-                    local lines = {}
-                    for _, npc in ipairs(npcTable) do
-                        local hum = npc:FindFirstChild("Humanoid")
-                        if hum then
-                            table.insert(
-                                lines, 
-                                string.format("%s [%d/%d]",
-                                    npc.Name, 
-                                    math.floor(hum.Health), 
-                                    math.floor(hum.MaxHealth)
-                                )
-                            )
-                        else
-                            table.insert(lines, npc.Name .. " [No HP Info]")
-                        end
-                    end
-                    StatusLabel.Text = "Status: Killing " .. table.concat(lines, ", ")
-                else
-                    StatusLabel.Text = "Status: No NPC Found"
+            for _, child in ipairs(NpcScrollFrame:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    child:Destroy()
                 end
-                TimeLabel.Text = "Time: " .. getTimeSinceStart()
-            end)
+            end
+            local npcTable = getAllNpcs()
+            if #npcTable == 0 then
+                local infoLabel = Instance.new("TextLabel")
+                infoLabel.BackgroundTransparency = 1
+                infoLabel.BorderSizePixel        = 0
+                infoLabel.Size                   = UDim2.new(1, 0, 0, 20)
+                infoLabel.Font                   = Enum.Font.Gotham
+                infoLabel.Text                   = "No NPC Found"
+                infoLabel.TextColor3             = Color3.fromRGB(0, 0, 0)
+                infoLabel.TextSize               = 16
+                infoLabel.Parent                 = NpcScrollFrame
+            else
+                for _, npc in ipairs(npcTable) do
+                    local hum = npc:FindFirstChild("Humanoid")
+                    local label = Instance.new("TextLabel")
+                    label.BackgroundTransparency = 1
+                    label.BorderSizePixel        = 0
+                    label.Size                   = UDim2.new(1, 0, 0, 20)  -- chiều cao 20
+                    label.Font                   = Enum.Font.Gotham
+                    if hum then
+                        label.Text = string.format("%s [%d/%d]", npc.Name, math.floor(hum.Health), math.floor(hum.MaxHealth))
+                    else
+                        label.Text = npc.Name .. " [No HP Info]"
+                    end
+                    label.TextColor3 = Color3.fromRGB(0, 0, 0)
+                    label.TextSize   = 16
+                    label.TextXAlignment = Enum.TextXAlignment.Left
+                    label.Parent     = NpcScrollFrame
+                end
+            end
+            TimeLabel.Text = "Time: " .. getTimeSinceStart()
         end
     end)
 end
