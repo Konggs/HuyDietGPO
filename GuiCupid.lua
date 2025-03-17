@@ -70,6 +70,7 @@ local function GUI()
     end
     task.spawn(function()
         while task.wait(1) do
+        pcall(function()
             for _, child in ipairs(NpcScrollFrame:GetChildren()) do
                 if child:IsA("TextLabel") then
                     child:Destroy()
@@ -108,6 +109,7 @@ local function GUI()
                 end
             end
             TimeLabel.Text = "Time: " .. getTimeSinceStart()
+            end)
         end
     end)
 end
