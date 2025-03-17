@@ -128,6 +128,4 @@ task.delay(5, function()
     if damageHighlight then
         damageHighlight:Destroy()
     end
-    workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
-    workspace.CurrentCamera.CFrame = CFrame.new(1000, 1000, 1000)
 end)
