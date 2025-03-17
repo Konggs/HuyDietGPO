@@ -96,18 +96,6 @@ task.delay(5, function()
             v.Enabled = false
         end
     end)
-    if localPlayer:FindFirstChild("PlayerGui") then
-         local playerGui = localPlayer:FindFirstChild("PlayerGui")
-         local guiNames = {
-             "BackpackGui","BossHP","HUD"
-         }
-         for _, name in ipairs(guiNames) do
-             local gui = playerGui:FindFirstChild(name)
-             if gui then
-                 gui.Enabled = false
-             end
-         end
-     end
     local Effects = RS:FindFirstChild("Effects")
     local HitEffect = Effects and Effects:FindFirstChild("HitEffect")
     if HitEffect then
